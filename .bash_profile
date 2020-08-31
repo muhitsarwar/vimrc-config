@@ -2,7 +2,7 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-PROMPT_COMMAND='PS1="[\[$COLOR_WHITE_BOLD\]\u\[$COLOR_CYAN_BOLD\] LV:\$(sl)\[$COLOR_YELLOW_BOLD\] \W\[$COLOR_WHITE\]] \[$(parse_git_color)\](\$(gb)) \[$COLOR_RED_BOLD\]\n>> \[$COLOR_WHITE\]"'
+PROMPT_COMMAND='PS1="[$(date +"%T")]\[$COLOR_YELLOW_BOLD\] \W\[$COLOR_WHITE\] \[$(parse_git_color)\](\$(gb)) \[$COLOR_RED_BOLD\]\n>> \[$COLOR_WHITE\]"'
 
 # colors
 # normal
