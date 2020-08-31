@@ -163,3 +163,5 @@ map <C-g> :NERDTreeToggle<CR>
 map <C-f> :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close vim if the only window left open is a NERDTree
 
+"wraping text
+set nowrap
