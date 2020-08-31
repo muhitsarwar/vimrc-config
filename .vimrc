@@ -626,3 +626,5 @@ nmap <Leader>gc <Plug>(grammarous-close-info-window)
 nmap <Leader>gf <Plug>(grammarous-fixit)
 
 " vim: sw=2 sw=2 et
+vnoremap <C-j> :m '>+1<CR>gv
+vnoremap <C-k> :m '<-2<CR>gv
