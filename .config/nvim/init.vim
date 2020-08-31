@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
@@ -165,3 +166,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 "wraping text
 set nowrap
+
+"repeat motion https://github.com/Houl/repmo-vim
+" map a motion and its reverse motion:
+:noremap <expr> h repmo#SelfKey('h', 'l')|sunmap h
+:noremap <expr> l repmo#SelfKey('l', 'h')|sunmap l
+
+" if you like `:noremap j gj', you can keep that:
+:map <expr> j repmo#Key('gj', 'gk')|sunmap j
+:map <expr> k repmo#Key('gk', 'gj')|sunmap k
+
+" repeat the last [count]motion or the last zap-key:
+:map <expr> ; repmo#LastKey(';')|sunmap ;
+:map <expr> , repmo#LastRevKey(',')|sunmap ,
