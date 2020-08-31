@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
+Plug 'preservim/nerdtree'
 call plug#end()
 
 vnoremap <C-j> :m '>+1<CR>gv
@@ -156,3 +157,9 @@ set statusline+=\ %*
 " set cursor like vince
 set cursorcolumn
 set cursorline
+
+"cusomized nerdtree
+map <C-g> :NERDTreeToggle<CR>
+map <C-f> :NERDTreeFind<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close vim if the only window left open is a NERDTree
+
