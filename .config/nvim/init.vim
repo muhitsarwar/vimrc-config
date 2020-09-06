@@ -4,6 +4,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'preservim/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
 call plug#end()
 
 vnoremap <C-j> :m '>+1<CR>gv
@@ -171,11 +174,41 @@ set nowrap
 " map a motion and its reverse motion:
 :noremap <expr> h repmo#SelfKey('h', 'l')|sunmap h
 :noremap <expr> l repmo#SelfKey('l', 'h')|sunmap l
-
 " if you like `:noremap j gj', you can keep that:
 :map <expr> j repmo#Key('gj', 'gk')|sunmap j
 :map <expr> k repmo#Key('gk', 'gj')|sunmap k
-
 " repeat the last [count]motion or the last zap-key:
 :map <expr> ; repmo#LastKey(';')|sunmap ;
 :map <expr> , repmo#LastRevKey(',')|sunmap ,
+:noremap <expr> f repmo#ZapKey('f')|sunmap f
+:noremap <expr> F repmo#ZapKey('F')|sunmap F
+:noremap <expr> t repmo#ZapKey('t')|sunmap t
+:noremap <expr> T repmo#ZapKey('T')|sunmap T
+
+
+"vim-go related
+nnoremap gv :vsp<CR>:GoDef<CR>
+
+
+" Better split switching
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+
+"Use the black hole register, _ to really delete something: "_d.
+"Use "_dP to paste something and keep it available for further pasting.
+nnoremap <leader>d "_d
+xnoremap <leader>d "_d
+xnoremap <leader>p "_dP
+
+"plz don't commit it until u store bookmark in stack
+"bookmark config
+"disabling ctrlp to store bookmarks in order
+let g:bookmark_disable_ctrlp=1
+let g:bookmark_auto_close=1
+let g:bm_stack_mode=1
+
+"fast down
+nnoremap <S-j> 5j
