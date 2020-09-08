@@ -219,3 +219,5 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 "move selected block left and right and keep selected
 vnoremap < <gv
 vnoremap > >gv
+
+vnoremap y ygv
