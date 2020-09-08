@@ -198,10 +198,8 @@ map <C-l> <C-W>l
 
 
 "Use the black hole register, _ to really delete something: "_d.
-"Use "_dP to paste something and keep it available for further pasting.
-nnoremap <leader>d "_d
-xnoremap <leader>d "_d
-xnoremap <leader>p "_dP
+nnoremap d "_d
+vnoremap d "_d
 
 "plz don't commit it until u store bookmark in stack
 "bookmark config
