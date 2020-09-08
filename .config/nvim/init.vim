@@ -219,5 +219,7 @@ vnoremap <C-k> :m '<-2<CR>gv=gv
 "move selected block left and right and keep selected
 vnoremap < <gv
 vnoremap > >gv
-
+"yank without existting ode
 vnoremap y ygv
+"nwe line without exitting normal mode
+nnoremap o o<Esc>
