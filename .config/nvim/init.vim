@@ -212,8 +212,6 @@ let g:bm_stack_mode=1
 nnoremap <S-j> 5j
 
 "move line up or down
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 "move selected block left and right and keep selected
