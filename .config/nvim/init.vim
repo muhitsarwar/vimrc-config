@@ -221,3 +221,6 @@ vnoremap > >gv
 vnoremap y ygv
 "nwe line without exitting normal mode
 nnoremap o o<Esc>
+
+"grep shortcut
+nnoremap gr :Ggrep <cword><CR>:copen<CR>
