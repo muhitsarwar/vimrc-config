@@ -1,6 +1,9 @@
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
+if [ -f $HOME/.bashrc ]; then
+        source $HOME/.bashrc
+fi
 
 PROMPT_COMMAND='PS1="\[$COLOR_GREEN_BOLD\] [$(date +"%T")]\[$COLOR_YELLOW_BOLD\] \$(PWD)\[$COLOR_WHITE\] \[$(parse_git_color)\](\$(gb)) \[$COLOR_RED_BOLD\]\n>> \[$COLOR_WHITE\]"'
 
