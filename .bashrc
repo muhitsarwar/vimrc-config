@@ -11,3 +11,4 @@ function his() {
 	#step2: eval will run the command
 	eval "$(history|fzf|awk '{$1 = ""; print $0 }')"
 }
+
