@@ -12,3 +12,13 @@ function his() {
 	eval "$(history|fzf|awk '{$1 = ""; print $0 }')"
 }
 
+#git function and alias
+function git_checkout_fzf() {
+	#reference: https://github.com/junegunn/fzf 
+	eval "git checkout $(git branch|fzf)"
+}
+
+alias gco='git_checkout_fzf'
+alias g='git'
+alias gcol='g checkout @{-1}'
+
