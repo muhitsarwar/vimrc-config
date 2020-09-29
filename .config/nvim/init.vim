@@ -246,3 +246,5 @@ endfunction
 autocmd VimLeave * call SaveSess()
 autocmd VimEnter * nested call RestoreSess()
 
+"ctrlp show hidden
+let g:ctrlp_show_hidden = 1
