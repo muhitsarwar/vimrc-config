@@ -13,6 +13,10 @@ function his() {
 }
 
 #git function and alias
+git_exclude() {
+	echo "$1" >> .git/info/exclude
+}
+
 function git_checkout_fzf() {
 	#reference: https://github.com/junegunn/fzf 
 	eval "git checkout $(git branch|fzf)"
@@ -21,4 +25,5 @@ function git_checkout_fzf() {
 alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
+alias gex='git_exclude'
 
