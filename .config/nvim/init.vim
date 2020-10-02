@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim' "for Gbrowse
 Plug 'fatih/molokai'
 Plug 'fatih/vim-go'
 Plug 'preservim/nerdtree'
@@ -243,7 +244,9 @@ if filereadable(getcwd() . '/.session.vim')
 endif
 endfunction
 
+autocmd VimLeave * NERDTreeClose
 autocmd VimLeave * call SaveSess()
+
 autocmd VimEnter * nested call RestoreSess()
 
 "ctrlp show hidden

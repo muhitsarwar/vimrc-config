@@ -11,6 +11,8 @@ fuzzy_history() {
 	#step2: eval will run the command
 	cmd="$(history|fzf|awk '{$1 = ""; print $0 }')"
 	echo $cmd
+
+	#append at the end of history list
 	history -s $cmd
 	eval $cmd
 }
@@ -30,8 +32,3 @@ alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
 alias gex='git_exclude'
-
-#change directory
-alias cdh='cd ~'
-alias cdl='cd -'
-
