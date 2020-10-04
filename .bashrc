@@ -9,23 +9,23 @@ fuzzy_history() {
 	#reference: https://github.com/junegunn/fzf 
 	#step1: fzf will help to grep history
 	#step2: eval will run the command
-	cmd="$(history|fzf|awk '{$1 = ""; print $0 }')"
+	cmd=`history|fzf|awk '{$1 = ""; print $0 }'`
 	echo $cmd
 
 	#append at the end of history list
 	history -s $cmd
-	eval $cmd
+	$cmd
 }
 alias fh=fuzzy_history
 
 #git function and alias
 git_exclude() {
-	echo "$1" >> .git/info/exclude
+	echo $1 >> .git/info/exclude
 }
 
 function git_checkout_fzf() {
 	#reference: https://github.com/junegunn/fzf 
-	eval "git checkout $(git branch|fzf)"
+	git checkout `git branch|fzf`
 }
 
 alias gco='git_checkout_fzf'
