@@ -32,3 +32,14 @@ alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
 alias gex='git_exclude'
+
+#upload script in server
+copy_script(){
+	{
+		#pipeline operator(|) is will provide output as input
+		#but in this case we don't need output
+		#that's why semicollon operator(;)
+		echo "cat >> .bashrc;source .bashrc"
+		cat .bashrc
+	} | pbcopy # pbcopy is to copy the output inside of curly braces into cliboard
+}
