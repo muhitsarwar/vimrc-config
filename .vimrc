@@ -34,6 +34,7 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tyru/open-browser.vim'
+Plug 'dhruvasagar/vim-zoom'
 
 call plug#end()
 
@@ -521,7 +522,6 @@ let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0    
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'   
 
-imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
 
 " ==================== NerdTree ====================
 " For toggling
@@ -628,3 +628,9 @@ nmap <Leader>gf <Plug>(grammarous-fixit)
 " vim: sw=2 sw=2 et
 vnoremap <C-j> :m '>+1<CR>gv
 vnoremap <C-k> :m '<-2<CR>gv
+
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+"zoom
+noremap zz <C-w>_
+noremap zo <C-w>=
