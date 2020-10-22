@@ -8,6 +8,8 @@ Plug 'preservim/nerdtree'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'dhruvasagar/vim-zoom'
 call plug#end()
 
 vnoremap <C-j> :m '>+1<CR>gv
@@ -247,7 +249,15 @@ endfunction
 autocmd VimLeave * NERDTreeClose
 autocmd VimLeave * call SaveSess()
 
-autocmd VimEnter * nested call RestoreSess()
+"autocmd VimEnter * nested call RestoreSess()
 
 "ctrlp show hidden
 let g:ctrlp_show_hidden = 1
+
+"json quote
+set conceallevel=0
+
+"zoom
+nmap z <C-W>m
+set statusline+=%{zoom#statusline()}
+
