@@ -19,14 +19,35 @@ fuzzy_history() {
 alias fh=fuzzy_history
 
 #git function and alias
+function parse_git_dirty {
+    [[ $(gb) != '' ]] && [[ "$(git status 2> /dev/null | tail -n1)" = "nothing to commit, working tree clean" ]] || echo '*'
+}
+
+function parse_git_color {
+  if [ "$(parse_git_dirty)" == '*' ]; then
+    echo $COLOR_RED_BOLD
+  else
+    echo $COLOR_GREEN_BOLD 
+  fi
+}
+
+function gb {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
 git_exclude() {
 	echo $1 >> .git/info/exclude
+}
+
+git_reset_head_hard() {
+	git reset --hard origin/`gb`
 }
 
 git_checkout_fzf() {
 	#reference: https://github.com/junegunn/fzf 
 	git checkout `git branch|fzf`
 }
+
 git_push(){
 	git push "$@"
 	if [[ $? != 0 ]]
@@ -37,12 +58,26 @@ git_push(){
 	fi
 }
 
+git_push_nopfb() {
+	branch="$(gb)"
+	nopfb="${branch}-nopfb"
+	git checkout "$nopfb"
+	if [[ $? != 0 ]] 
+	then
+		git checkout -b "$nopfb"
+	fi
+	git merge "$branch"
+	git_push
+	git checkout "$branch"
+}
+
 alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
 alias gex='git_exclude'
 alias grb='git rebase -i'
 alias gp='f() { git_push "$@"; }; f'
+alias gr='git config --get remote.origin.url'
 #upload script in server
 copy_script(){
 	{
@@ -71,3 +106,14 @@ alias tn=tmux_new
 
 #vim & nvim
 alias vim=nvim
+
+#don't duplicate bash history
+HISTCONTROL=ignoreboth
+
+#Tmux history
+if [[ $TMUX_PANE ]]; then
+	#will store lot's of story, so need to keep for a size
+	PROMPT_COMMAND="history -a"
+	HISTFILE=$HOME/tmux_his/.bash_history_tmux_${TMUX_PANE:1}
+	touch "$HISTFILE"
+fi

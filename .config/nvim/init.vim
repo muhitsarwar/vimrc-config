@@ -1,3 +1,4 @@
+"PlugInstall
 call plug#begin('~/.vim/plugged')
 Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-fugitive'
@@ -10,6 +11,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
+Plug '907th/vim-auto-save'
 call plug#end()
 
 vnoremap <C-j> :m '>+1<CR>gv
@@ -261,3 +263,5 @@ set conceallevel=0
 nmap z <C-W>m
 set statusline+=%{zoom#statusline()}
 
+"auto save
+let g:auto_save = 1
