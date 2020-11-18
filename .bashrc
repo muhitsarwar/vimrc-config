@@ -113,7 +113,6 @@ HISTCONTROL=ignoreboth
 #Tmux history
 if [[ $TMUX_PANE ]]; then
 	#will store lot's of story, so need to keep for a size
-	PROMPT_COMMAND="history -a"
 	HISTFILE=$HOME/tmux_his/.bash_history_tmux_${TMUX_PANE:1}
 	touch "$HISTFILE"
 fi
