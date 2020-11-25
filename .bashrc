@@ -116,3 +116,10 @@ if [[ $TMUX_PANE ]]; then
 	HISTFILE=$HOME/tmux_his/.bash_history_tmux_${TMUX_PANE:1}
 	touch "$HISTFILE"
 fi
+
+tmux_checkout_fzf() {
+	#reference: https://github.com/junegunn/fzf 
+	tmux attach -t `tmux ls -F '#S'|fzf`
+}
+
+alias tco='tmux_checkout_fzf'
