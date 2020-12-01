@@ -66,16 +66,32 @@ git_push_nopfb() {
 	then
 		git checkout -b "$nopfb"
 	fi
-	git merge "$branch"
-	git_push
+	git reset --hard "$branch"
+	git_push -f
 	git checkout "$branch"
+}
+git_rebase(){
+	if [ -z "$1" ]
+	then 
+		idx=2
+	else
+		idx="$1"
+	fi
+	if [ "$(parse_git_dirty)" == '*' ]
+	then
+		git stash
+		git rebase -i head~$idx
+		git stash pop
+	else
+		git rebase -i head~$idx
+	fi
 }
 
 alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
 alias gex='git_exclude'
-alias grb='git rebase -i'
+alias grb='git_rebase'
 alias gp='f() { git_push "$@"; }; f'
 alias gr='git config --get remote.origin.url'
 #upload script in server
