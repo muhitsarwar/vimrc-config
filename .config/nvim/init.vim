@@ -12,6 +12,7 @@ Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stac
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
 Plug '907th/vim-auto-save'
+Plug 'michaeljsmith/vim-indent-object'
 call plug#end()
 
 vnoremap <C-j> :m '>+1<CR>gv
@@ -196,10 +197,10 @@ nnoremap gv :vsp<CR>:GoDef<CR>
 
 
 " Better split switching
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
 
 
 "Use the black hole register, _ to really delete something: "_d.
@@ -217,8 +218,8 @@ let g:bm_stack_mode=1
 nnoremap <S-j> 5j
 
 "move line up or down
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-u> :m '>+1<CR>gv=gv
+vnoremap <C-d> :m '<-2<CR>gv=gv
 "move selected block left and right and keep selected
 vnoremap < <gv
 vnoremap > >gv
@@ -260,8 +261,17 @@ let g:ctrlp_show_hidden = 1
 set conceallevel=0
 
 "zoom
-nmap z <C-W>m
-set statusline+=%{zoom#statusline()}
+nmap zm <C-W>m
+"set statusline+=%{zoom#statusline()}
 
 "auto save
 let g:auto_save = 1
+
+"open current file in vs code
+nnoremap op :!code %<CR><CR>
+
+
+
+"goto next indent line
+nnoremap <C-k> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+nnoremap <C-j> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>

@@ -1,6 +1,3 @@
-set -o vi
-
-
 VISULA=nvim
 EDITOR=$VISUAL
 
@@ -44,8 +41,11 @@ git_reset_head_hard() {
 }
 
 git_checkout_fzf() {
+	git fetch
 	#reference: https://github.com/junegunn/fzf 
-	git checkout `git branch|fzf`
+	cmd="git checkout `git branch $1 --sort=-committerdate|fzf --no-sort`"
+	history -s $cmd
+	$cmd
 }
 
 git_push(){
@@ -87,13 +87,16 @@ git_rebase(){
 	fi
 }
 
+git_open(){
+	open `git config --get remote.origin.url`
+}
+
 alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
 alias gex='git_exclude'
 alias grb='git_rebase'
 alias gp='f() { git_push "$@"; }; f'
-alias gr='git config --get remote.origin.url'
 #upload script in server
 copy_script(){
 	{
@@ -112,11 +115,7 @@ attach_tmux(){
 tmux_new(){
 	tmux new -s "$1"
 }
-bash_load(){
-	source .bashrc
-}
 
-alias l=bash_load
 alias a='attach_tmux sys-config'
 alias tn=tmux_new
 
@@ -139,3 +138,31 @@ tmux_checkout_fzf() {
 }
 
 alias tco='tmux_checkout_fzf'
+
+#vpn shopee
+vpn() {
+    local user="muhit.sarwar"
+    local pwd="dotdotdot.3"
+    printf "1\n$user\n$pwd" | /opt/cisco/anyconnect/bin/vpn -s connect "sg.oneconnect.shopeemobile.com"
+}
+ 
+vpn-disconnect() {
+    /opt/cisco/anyconnect/bin/vpn -s disconnect
+}
+ 
+vpn-stats() {
+    /opt/cisco/anyconnect/bin/vpn stats
+}
+
+
+#.bashrc autoload
+if [[ -f ".bashrcl" ]]; then
+    source .bashrcl
+fi
+
+
+#kill falcond
+kill-falcond(){
+	sudo launchctl stop /Library/LaunchDaemons/com.crowdstrike.falcond.plist
+	sudo launchctl unload /Library/LaunchDaemons/com.crowdstrike.falcond.plist
+}
