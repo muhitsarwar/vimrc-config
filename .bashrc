@@ -91,12 +91,24 @@ git_open(){
 	open `git config --get remote.origin.url`
 }
 
+git_create_branch(){
+	git checkout master
+	git pull
+	if [ -z "$2"]
+	then
+		git checkout -b muhit/$1/sppay-$2
+	fi
+	git checkout -b muhit/task/sppay-$1
+}
+
 alias gco='git_checkout_fzf'
 alias g='git'
 alias gcol='g checkout @{-1}'
 alias gex='git_exclude'
 alias grb='git_rebase'
 alias gp='f() { git_push "$@"; }; f'
+alias gnb='f() { git_create_branch "$@"; }; f'
+
 #upload script in server
 copy_script(){
 	{
@@ -139,11 +151,11 @@ tmux_checkout_fzf() {
 
 alias tco='tmux_checkout_fzf'
 
+source .env
+
 #vpn shopee
 vpn() {
-    local user="muhit.sarwar"
-    local pwd="dotdotdot.3"
-    printf "1\n$user\n$pwd" | /opt/cisco/anyconnect/bin/vpn -s connect "sg.oneconnect.shopeemobile.com"
+    printf "1\n$vpn_user\n$vpn_pwd" | /opt/cisco/anyconnect/bin/vpn -s connect "sg.oneconnect.shopeemobile.com"
 }
  
 vpn-disconnect() {
@@ -160,6 +172,8 @@ if [[ -f ".bashrcl" ]]; then
     source .bashrcl
 fi
 
+# ls related
+alias l='ls -lA'
 
 #kill falcond
 kill-falcond(){

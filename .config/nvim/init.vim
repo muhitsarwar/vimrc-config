@@ -15,8 +15,6 @@ Plug '907th/vim-auto-save'
 Plug 'michaeljsmith/vim-indent-object'
 call plug#end()
 
-vnoremap <C-j> :m '>+1<CR>gv
-vnoremap <C-k> :m '<-2<CR>gv
 
 " Show whitespace
 set list
@@ -218,8 +216,8 @@ let g:bm_stack_mode=1
 nnoremap <S-j> 5j
 
 "move line up or down
-vnoremap <C-u> :m '>+1<CR>gv=gv
-vnoremap <C-d> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 "move selected block left and right and keep selected
 vnoremap < <gv
 vnoremap > >gv
@@ -265,10 +263,12 @@ nmap zm <C-W>m
 "set statusline+=%{zoom#statusline()}
 
 "auto save
-let g:auto_save = 1
+"let g:auto_save = 1
 
-"open current file in vs code
-nnoremap op :!code %<CR><CR>
+"open current file in jetbrains
+nnoremap gl :!goland ~/Go\ project/seapay100_module/%<CR><CR> 
+"you need you configure goland/pycharm. plz check https://www.jetbrains.com/help/go/working-with-the-ide-features-from-command-line.html#toolbox
+"nnoremap op :!code %<CR><CR>
 
 
 
