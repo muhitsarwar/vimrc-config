@@ -4,7 +4,6 @@ Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim' "for Gbrowse
 Plug 'fatih/molokai'
-Plug 'fatih/vim-go'
 Plug 'preservim/nerdtree'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
@@ -13,6 +12,11 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
 Plug '907th/vim-auto-save'
 Plug 'michaeljsmith/vim-indent-object'
+"language specific
+Plug 'fatih/vim-go'
+Plug 'prabirshrestha/vim-lsp' 
+Plug 'mattn/vim-lsp-settings' "LspInstallServer to install server
+Plug 'udalov/kotlin-vim'
 call plug#end()
 
 
@@ -227,7 +231,7 @@ vnoremap y ygv
 nnoremap o o<Esc>
 
 "grep shortcut
-nnoremap gr :Ggrep <cword><CR>:copen<CR>
+nnoremap gr :Ggrep <cword><CR>:copen<CR><CR>
 
 "vim auto save session
 "fu! SaveSess()
@@ -282,3 +286,19 @@ nmap zm <C-W>m
 "set number                     " Show current line number
 set relativenumber             " Show relative line numbers
 
+
+"%% for same directory https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/
+cnoremap <expr> %% getcmdtype() ==# ':' ? fnameescape(expand('%:h')) . '/' : '%%'
+
+"quickfix: 
+function! QuickfixMapping()
+  " Go to the previous location and stay in the quickfix window
+  nnoremap <buffer> k :cprev<CR>zz<C-w>w
+
+  " Go to the next location and stay in the quickfix window
+  nnoremap <buffer> j :cnext<CR>zz<C-w>w
+endfunction
+augroup quickfix_group
+    autocmd!
+    autocmd filetype qf call QuickfixMapping()
+augroup END
