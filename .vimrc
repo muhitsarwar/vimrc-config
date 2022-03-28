@@ -1,24 +1,42 @@
 "PlugInstall
 call plug#begin('~/.vim/plugged')
+Plug 'vim-scripts/copypath.vim'
+Plug 'vim-scripts/RltvNmbr.vim'
 Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim' "for Gbrowse
 Plug 'fatih/molokai'
 Plug 'preservim/nerdtree'
-Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
 Plug '907th/vim-auto-save'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 "language specific
+Plug 'google/vim-jsonnet'
 Plug 'fatih/vim-go'
 Plug 'prabirshrestha/vim-lsp' 
 Plug 'mattn/vim-lsp-settings' "LspInstallServer to install server
 Plug 'udalov/kotlin-vim'
 call plug#end()
 
+
+
+
+"mouse scroll and enable
+set mouse=a
+if !has('nvim')
+  set ttymouse=xterm2
+endif
+"set ttyfast
+"if !has('nvim')
+"  set ttymouse=xterm2
+"  set ttyscroll=3
+"endif
+"set mouse=a                     "Enable mouse mode
 
 " Show whitespace
 set list
@@ -32,7 +50,6 @@ set autoindent
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set incsearch                   " Shows the match while typing
 set hlsearch                    " Highlight found searches
-set mouse=a                     "Enable mouse mode
 
 set noerrorbells             " No beeps
 set number                   " Show line numbers
@@ -211,8 +228,6 @@ vnoremap d "_d
 
 "plz don't commit it until u store bookmark in stack
 "bookmark config
-"disabling ctrlp to store bookmarks in order
-let g:bookmark_disable_ctrlp=1
 let g:bookmark_auto_close=1
 let g:bm_stack_mode=1
 
@@ -226,6 +241,8 @@ vnoremap > >gv
 
 "yank without existting ode
 vnoremap y ygv
+"yank full line
+nnoremap Y yy
 
 "nwe line without exitting normal mode
 nnoremap o o<Esc>
@@ -257,9 +274,8 @@ nnoremap gr :Ggrep <cword><CR>:copen<CR><CR>
 "autocmd VimEnter * nested call RestoreSess()
 
 "ctrlp related
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_max_files=0
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+"fzf and vim
+noremap <C-p> :Files<CR>
 
 "json quote
 set conceallevel=0
@@ -283,8 +299,12 @@ nmap zm <C-W>m
 "nnoremap <C-j> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 
 "relative number
-"set number                     " Show current line number
+set number                     " Show current line number
 set relativenumber             " Show relative line numbers
+highlight LineNr ctermfg=green
+"autocmd VimEnter,BufEnter * RltvNmbr
+"autocmd :RltvNmbr
+
 
 
 "%% for same directory https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/
@@ -293,12 +313,25 @@ cnoremap <expr> %% getcmdtype() ==# ':' ? fnameescape(expand('%:h')) . '/' : '%%
 "quickfix: 
 function! QuickfixMapping()
   " Go to the previous location and stay in the quickfix window
-  nnoremap <buffer> k :cprev<CR>zz<C-w>w
-
+  nnoremap <buffer> k :cprev<CR><C-w>w
   " Go to the next location and stay in the quickfix window
-  nnoremap <buffer> j :cnext<CR>zz<C-w>w
+  nnoremap <buffer> j :cnext<CR><C-w>w
 endfunction
 augroup quickfix_group
     autocmd!
     autocmd filetype qf call QuickfixMapping()
 augroup END
+
+"cursor always center
+augroup VCenterCursor
+  au!
+  au BufEnter,WinEnter,WinNew,VimResized *,*.*
+        \ let &scrolloff=winheight(win_getid())/2
+augroup END"
+"if want to disable above feature
+"au! VCenterCursor
+"
+
+"set tab or space indent
+set noet sw=4 ts=4 "et=expandtab sw=shiftwidth ts=tabstop
+"set et sw=2 "set 2 space as indent

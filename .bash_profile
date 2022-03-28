@@ -48,3 +48,5 @@ function gb {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
 
+#export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+#[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"

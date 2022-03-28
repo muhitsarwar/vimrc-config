@@ -1,20 +1,42 @@
 "PlugInstall
 call plug#begin('~/.vim/plugged')
+Plug 'vim-scripts/copypath.vim'
+Plug 'vim-scripts/RltvNmbr.vim'
 Plug 'Houl/repmo-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim' "for Gbrowse
 Plug 'fatih/molokai'
-Plug 'fatih/vim-go'
 Plug 'preservim/nerdtree'
-Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
 Plug '907th/vim-auto-save'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+"language specific
+Plug 'google/vim-jsonnet'
+Plug 'fatih/vim-go'
+Plug 'prabirshrestha/vim-lsp' 
+Plug 'mattn/vim-lsp-settings' "LspInstallServer to install server
+Plug 'udalov/kotlin-vim'
 call plug#end()
 
+
+
+
+"mouse scroll and enable
+set mouse=a
+if !has('nvim')
+  set ttymouse=xterm2
+endif
+"set ttyfast
+"if !has('nvim')
+"  set ttymouse=xterm2
+"  set ttyscroll=3
+"endif
+"set mouse=a                     "Enable mouse mode
 
 " Show whitespace
 set list
@@ -28,7 +50,6 @@ set autoindent
 set backspace=indent,eol,start  " Makes backspace key more powerful.
 set incsearch                   " Shows the match while typing
 set hlsearch                    " Highlight found searches
-set mouse=a                     "Enable mouse mode
 
 set noerrorbells             " No beeps
 set number                   " Show line numbers
@@ -207,53 +228,54 @@ vnoremap d "_d
 
 "plz don't commit it until u store bookmark in stack
 "bookmark config
-"disabling ctrlp to store bookmarks in order
-let g:bookmark_disable_ctrlp=1
 let g:bookmark_auto_close=1
 let g:bm_stack_mode=1
-
-"fast down
-nnoremap <S-j> 5j
 
 "move line up or down
 vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
+
 "move selected block left and right and keep selected
 vnoremap < <gv
 vnoremap > >gv
+
 "yank without existting ode
 vnoremap y ygv
+"yank full line
+nnoremap Y yy
+
 "nwe line without exitting normal mode
 nnoremap o o<Esc>
 
 "grep shortcut
-nnoremap gr :Ggrep <cword><CR>:copen<CR>
+nnoremap gr :Ggrep <cword><CR>:copen<CR><CR>
 
 "vim auto save session
-fu! SaveSess()
-    execute 'mksession! ' . getcwd() . '/.session.vim'
-endfunction
+"fu! SaveSess()
+"    execute 'mksession! ' . getcwd() . '/.session.vim'
+"endfunction
 
-fu! RestoreSess()
-if filereadable(getcwd() . '/.session.vim')
-    execute 'so ' . getcwd() . '/.session.vim'
-    if bufexists(1)
-        for l in range(1, bufnr('$'))
-            if bufwinnr(l) == -1
-                exec 'sbuffer ' . l
-            endif
-        endfor
-    endif
-endif
-endfunction
+"fu! RestoreSess()
+"if filereadable(getcwd() . '/.session.vim')
+"    execute 'so ' . getcwd() . '/.session.vim'
+"    if bufexists(1)
+"        for l in range(1, bufnr('$'))
+"            if bufwinnr(l) == -1
+"                exec 'sbuffer ' . l
+"            endif
+"        endfor
+"    endif
+"endif
+"endfunction
 
-autocmd VimLeave * NERDTreeClose
-autocmd VimLeave * call SaveSess()
+"autocmd VimLeave * NERDTreeClose
+"autocmd VimLeave * call SaveSess()
 
 "autocmd VimEnter * nested call RestoreSess()
 
-"ctrlp show hidden
-let g:ctrlp_show_hidden = 1
+"ctrlp related
+"fzf and vim
+noremap <C-p> :Files<CR>
 
 "json quote
 set conceallevel=0
@@ -266,12 +288,50 @@ nmap zm <C-W>m
 "let g:auto_save = 1
 
 "open current file in jetbrains
-nnoremap gl :!goland ~/Go\ project/seapay100_module/%<CR><CR> 
+"nnoremap gl :!goland ~/Go\ project/seapay100_module/%<CR><CR> 
 "you need you configure goland/pycharm. plz check https://www.jetbrains.com/help/go/working-with-the-ide-features-from-command-line.html#toolbox
 "nnoremap op :!code %<CR><CR>
 
 
 
 "goto next indent line
-nnoremap <C-k> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
-nnoremap <C-j> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+"nnoremap <C-k> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+"nnoremap <C-j> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+
+"relative number
+set number                     " Show current line number
+set relativenumber             " Show relative line numbers
+highlight LineNr ctermfg=green
+"autocmd VimEnter,BufEnter * RltvNmbr
+"autocmd :RltvNmbr
+
+
+
+"%% for same directory https://vonheikemen.github.io/devlog/tools/vim-and-the-quickfix-list/
+cnoremap <expr> %% getcmdtype() ==# ':' ? fnameescape(expand('%:h')) . '/' : '%%'
+
+"quickfix: 
+function! QuickfixMapping()
+  " Go to the previous location and stay in the quickfix window
+  nnoremap <buffer> k :cprev<CR><C-w>w
+  " Go to the next location and stay in the quickfix window
+  nnoremap <buffer> j :cnext<CR><C-w>w
+endfunction
+augroup quickfix_group
+    autocmd!
+    autocmd filetype qf call QuickfixMapping()
+augroup END
+
+"cursor always center
+augroup VCenterCursor
+  au!
+  au BufEnter,WinEnter,WinNew,VimResized *,*.*
+        \ let &scrolloff=winheight(win_getid())/2
+augroup END"
+"if want to disable above feature
+"au! VCenterCursor
+"
+
+"set tab or space indent
+set noet sw=4 ts=4 "et=expandtab sw=shiftwidth ts=tabstop
+"set et sw=2 "set 2 space as indent

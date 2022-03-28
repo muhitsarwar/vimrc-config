@@ -1,32 +1,36 @@
 VISULA=nvim
 EDITOR=$VISUAL
 
-#fuzzy history
-fuzzy_history() {
-	#reference: https://github.com/junegunn/fzf 
-	#step1: fzf will help to grep history
-	#step2: eval will run the command
-	cmd=`history|fzf|awk '{$1 = ""; print $0 }'`
-	echo $cmd
+#sources
+#source ~/.env
+source ~/.cds
 
-	#append at the end of history list
-	history -s $cmd
-	$cmd
-}
-alias fh=fuzzy_history
+#fuzzy history
+#fuzzy_history() {
+#	#reference: https://github.com/junegunn/fzf 
+#	#step1: fzf will help to grep history
+#	#step2: eval will run the command
+#	cmd=`history|fzf|awk '{$1 = ""; print $0 }'`
+#	echo $cmd
+#
+#	#append at the end of history list
+#	history -s $cmd
+#	$cmd
+#}
+#alias fh=fuzzy_history
 
 #git function and alias
 function parse_git_dirty {
     [[ $(gb) != '' ]] && [[ "$(git status 2> /dev/null | tail -n1)" = "nothing to commit, working tree clean" ]] || echo '*'
 }
-
-function parse_git_color {
-  if [ "$(parse_git_dirty)" == '*' ]; then
-    echo $COLOR_RED_BOLD
-  else
-    echo $COLOR_GREEN_BOLD 
-  fi
-}
+#
+#function parse_git_color {
+#  if [ "$(parse_git_dirty)" == '*' ]; then
+#    echo $COLOR_RED_BOLD
+#  else
+#    echo $COLOR_GREEN_BOLD 
+#  fi
+#}
 
 function gb {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
@@ -40,36 +44,24 @@ git_reset_head_hard() {
 	git reset --hard origin/`gb`
 }
 
-git_checkout_fzf() {
-	git fetch
-	#reference: https://github.com/junegunn/fzf 
-	cmd="git checkout `git branch $1 --sort=-committerdate|fzf --no-sort`"
-	history -s $cmd
-	$cmd
-}
+#git_checkout_fzf() {
+#	git fetch
+#	#reference: https://github.com/junegunn/fzf 
+#	cmd="git checkout `git branch $1 --sort=-committerdate|fzf --no-sort`"
+#	history -s $cmd
+#	$cmd
+#}
 
-git_push(){
-	git push "$@"
-	if [[ $? != 0 ]]
-	then 
-		printf "setting up stream for %s\n", $branch
-		branch=`git branch|grep '*'|awk '{print $2}'`
-		git push --set-upstream origin "$branch" "$@"
-	fi
-}
+#git_push(){
+#	git push "$@"
+#	if [[ $? != 0 ]]
+#	then 
+#		printf "setting up stream for %s\n", $branch
+#		branch=`git branch|grep '*'|awk '{print $2}'`
+#		git push --set-upstream origin "$branch" "$@"
+#	fi
+#}
 
-git_push_nopfb() {
-	branch="$(gb)"
-	nopfb="${branch}-nopfb"
-	git checkout "$nopfb"
-	if [[ $? != 0 ]] 
-	then
-		git checkout -b "$nopfb"
-	fi
-	git reset --hard "$branch"
-	git_push -f
-	git checkout "$branch"
-}
 git_rebase(){
 	if [ -z "$1" ]
 	then 
@@ -87,27 +79,19 @@ git_rebase(){
 	fi
 }
 
-git_open(){
-	open `git config --get remote.origin.url`
-}
+#git_open(){
+#	open `git config --get remote.origin.url`
+#}
 
-git_create_branch(){
-	git checkout master
-	git pull
-	if [ -z "$2"]
-	then
-		git checkout -b muhit/$1/sppay-$2
-	fi
-	git checkout -b muhit/task/sppay-$1
-}
-
-alias gco='git_checkout_fzf'
-alias g='git'
-alias gcol='g checkout @{-1}'
-alias gex='git_exclude'
-alias grb='git_rebase'
-alias gp='f() { git_push "$@"; }; f'
-alias gnb='f() { git_create_branch "$@"; }; f'
+#git_create_branch(){
+#	git checkout master
+#	git pull
+#	if [ -z "$2"]
+#	then
+#		git checkout -b muhit/$1/sppay-$2
+#	fi
+#	git checkout -b muhit/task/sppay-$1
+#}
 
 #upload script in server
 copy_script(){
@@ -151,7 +135,6 @@ tmux_checkout_fzf() {
 
 alias tco='tmux_checkout_fzf'
 
-source .env
 
 #vpn shopee
 vpn() {
@@ -175,8 +158,9 @@ fi
 # ls related
 alias l='ls -lA'
 
-#kill falcond
-kill-falcond(){
-	sudo launchctl stop /Library/LaunchDaemons/com.crowdstrike.falcond.plist
-	sudo launchctl unload /Library/LaunchDaemons/com.crowdstrike.falcond.plist
-}
+
+#kubernetes related
+#source ~/_kubectl_completion_bash
+#alias k='minikube kubectl --'
+#complete -F __start_kubectl k
+
