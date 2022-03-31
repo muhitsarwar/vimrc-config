@@ -1,3 +1,4 @@
+# plugin 81G
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -78,9 +79,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #git clone --depth=1 https://github.com/
 # custom plugins may be added to $zsh_custom/plugins/
 # example format: plugins=(rails git textmate ruby lighthouse)
 # add wisely, as too many plugins slow down shell startup.
-plugins=(z git colored-man-pages colorize pip python brew macos zsh-autosuggestions sudo web-search copypath copyfile copybuffer dirhistory jsontools thefuck)
+plugins=(z git colored-man-pages colorize pip python brew macos zsh-autosuggestions sudo web-search copypath copyfile copybuffer thefuck)
 #macos man-preview cdf ofd pfd tab split_tab vsplit_tab btrestart
-#jsontools pp_json to pretty print ex: curl ex.com|pp_json
 #dirhistory option arrow
 #copybuffer ctrl-o to copy from buffer
 

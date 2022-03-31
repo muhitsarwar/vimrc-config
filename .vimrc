@@ -7,7 +7,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim' "for Gbrowse
 Plug 'fatih/molokai'
 Plug 'preservim/nerdtree'
-Plug 'tpope/vim-fugitive'
 Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
@@ -84,9 +83,6 @@ set clipboard^=unnamedplus
 " increase max memory to show syntax highlighting for large files 
 set maxmempattern=20000
 
-" ~/.viminfo needs to be writable and readable. Set oldfiles to 1000 last
-" recently opened files, :FzfHistory uses it
-set viminfo='1000
 
 " color
 syntax enable
@@ -273,10 +269,6 @@ nnoremap gr :Ggrep <cword><CR>:copen<CR><CR>
 
 "autocmd VimEnter * nested call RestoreSess()
 
-"ctrlp related
-"fzf and vim
-noremap <C-p> :Files<CR>
-
 "json quote
 set conceallevel=0
 
@@ -330,8 +322,38 @@ augroup VCenterCursor
 augroup END"
 "if want to disable above feature
 "au! VCenterCursor
-"
+
 
 "set tab or space indent
-set noet sw=4 ts=4 "et=expandtab sw=shiftwidth ts=tabstop
-"set et sw=2 "set 2 space as indent
+command! TabMode :set noet sw=4 ts=4 "et=expandtab sw=shiftwidth ts=tabstop
+command! SpaceMode :set et sw=2 "set 2 space as indent
+
+
+"source/reload vimrc
+command! ReloadVimRC :source ~/.vimrc
+
+"nerdtree
+let NERDTreeMapOpenSplit='<C-s>'
+let NERDTreeMapOpenVSplit='<C-v>'
+let NERDTreeMapPreviewVSplit='gv'
+let NERDTreeMapPreviewSplit='gs'
+
+
+"fzf
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+"ctrlp related
+"fzf and vim
+noremap <C-p> :Files<CR>
+" ~/.viminfo needs to be writable and readable. Set oldfiles to 1000 last
+" recently opened files, :FzfHistory uses it
+set viminfo='1000
+
+"lsp
+let g:lsp_settings = {
+\  'yaml-language-server': {
+\    'disabled': 1,
+\   }
+\}
