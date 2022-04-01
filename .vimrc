@@ -183,11 +183,6 @@ set statusline+=\ %*
 set cursorcolumn
 set cursorline
 
-"cusomized nerdtree
-map <C-g> :NERDTreeToggle<CR>
-map <C-f> :NERDTreeFind<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close vim if the only window left open is a NERDTree
-
 "wraping text
 set nowrap
 
@@ -337,6 +332,9 @@ let NERDTreeMapOpenSplit='<C-s>'
 let NERDTreeMapOpenVSplit='<C-v>'
 let NERDTreeMapPreviewVSplit='gv'
 let NERDTreeMapPreviewSplit='gs'
+map <C-g> :NERDTreeToggle<CR>
+map <C-f> :NERDTreeFind<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close vim if the only window left open is a NERDTree
 
 
 "fzf
