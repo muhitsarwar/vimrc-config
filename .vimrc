@@ -1,5 +1,13 @@
+
 "PlugInstall
 call plug#begin('~/.vim/plugged')
+"verb
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'christoomey/vim-sort-motion'
+Plug 'vim-scripts/ReplaceWithRegister'
+"noun
+Plug 'michaeljsmith/vim-indent-object'
 Plug 'vim-scripts/copypath.vim'
 Plug 'vim-scripts/RltvNmbr.vim'
 Plug 'Houl/repmo-vim'
@@ -7,19 +15,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim' "for Gbrowse
 Plug 'fatih/molokai'
 Plug 'preservim/nerdtree'
-Plug 'muhitsarwar/vim-bookmarks', { 'branch': 'muhit/feature/toogle-between-stack-and-normal-mode' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-zoom'
 Plug '907th/vim-auto-save'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'thinca/vim-localrc'
+Plug 'natebosch/vim-lsc'
+Plug 'github/copilot.vim'
+"Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'nathanaelkane/vim-indent-guides'
 "language specific
-Plug 'google/vim-jsonnet'
-Plug 'fatih/vim-go'
-Plug 'prabirshrestha/vim-lsp' 
-Plug 'mattn/vim-lsp-settings' "LspInstallServer to install server
+ Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'fatih/vim-go'
 Plug 'udalov/kotlin-vim'
+Plug 'google/vim-jsonnet'
 call plug#end()
 
 
@@ -39,7 +51,7 @@ endif
 
 " Show whitespace
 set list
-set listchars=tab:--
+set listchars=eol:¬,tab:-- "space:·,trail:·,extends:»,nbsp:·,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol:·,blank:·,nbsp:·,trail:·,extends:»,precedes:«,zero:·,nonumber:·,tab:·,eol
 
 
 set laststatus=2
@@ -167,9 +179,9 @@ set statusline+=\ %{StatusLineLeftInfo()}
 set statusline+=\ %*
 
 " go command status (requires vim-go)
-set statusline+=%#goStatuslineColor#
-set statusline+=%{go#statusline#Show()}
-set statusline+=%*
+"set statusline+=%#goStatuslineColor#
+"set statusline+=%{go#statusline#Show()}
+"set statusline+=%*
 
 " right section seperator
 set statusline+=%=
@@ -188,22 +200,22 @@ set nowrap
 
 "repeat motion https://github.com/Houl/repmo-vim
 " map a motion and its reverse motion:
-:noremap <expr> h repmo#SelfKey('h', 'l')|sunmap h
-:noremap <expr> l repmo#SelfKey('l', 'h')|sunmap l
+noremap <expr> h repmo#SelfKey('h', 'l')|sunmap h
+noremap <expr> l repmo#SelfKey('l', 'h')|sunmap l
 " if you like `:noremap j gj', you can keep that:
-:map <expr> j repmo#Key('gj', 'gk')|sunmap j
-:map <expr> k repmo#Key('gk', 'gj')|sunmap k
+map <expr> j repmo#Key('gj', 'gk')|sunmap j
+map <expr> k repmo#Key('gk', 'gj')|sunmap k
 " repeat the last [count]motion or the last zap-key:
-:map <expr> ; repmo#LastKey(';')|sunmap ;
-:map <expr> , repmo#LastRevKey(',')|sunmap ,
-:noremap <expr> f repmo#ZapKey('f')|sunmap f
-:noremap <expr> F repmo#ZapKey('F')|sunmap F
-:noremap <expr> t repmo#ZapKey('t')|sunmap t
-:noremap <expr> T repmo#ZapKey('T')|sunmap T
+map <expr> ; repmo#LastKey(';')|sunmap ;
+map <expr> , repmo#LastRevKey(',')|sunmap ,
+noremap <expr> f repmo#ZapKey('f')|sunmap f
+noremap <expr> F repmo#ZapKey('F')|sunmap F
+noremap <expr> t repmo#ZapKey('t')|sunmap t
+noremap <expr> T repmo#ZapKey('T')|sunmap T
 
 
 "vim-go related
-nnoremap gv :vsp<CR>:GoDef<CR>
+"nnoremap gv :vsp<CR>:GoDef<CR>
 
 
 " Better split switching
@@ -214,13 +226,17 @@ nnoremap gv :vsp<CR>:GoDef<CR>
 
 
 "Use the black hole register, _ to really delete something: "_d.
-nnoremap d "_d
-vnoremap d "_d
+" nnoremap d "_d
+" vnoremap d "_d
+"Paste might replace. need further investigation
+"nnoremap p "0p
+"vnoremap p "0p
+
 
 "plz don't commit it until u store bookmark in stack
 "bookmark config
-let g:bookmark_auto_close=1
-let g:bm_stack_mode=1
+" let g:bookmark_auto_close=1
+" let g:bm_stack_mode=1
 
 "move line up or down
 vnoremap <C-j> :m '>+1<CR>gv=gv
@@ -231,15 +247,16 @@ vnoremap < <gv
 vnoremap > >gv
 
 "yank without existting ode
-vnoremap y ygv
+" vnoremap y ygv
 "yank full line
 nnoremap Y yy
 
 "nwe line without exitting normal mode
 nnoremap o o<Esc>
+nnoremap O O<Esc>
 
 "grep shortcut
-nnoremap gr :Ggrep <cword><CR>:copen<CR><CR>
+" nnoremap gr :Ggrep <cword><CR>:copen<CR><CR>
 
 "vim auto save session
 "fu! SaveSess()
@@ -298,16 +315,16 @@ highlight LineNr ctermfg=green
 cnoremap <expr> %% getcmdtype() ==# ':' ? fnameescape(expand('%:h')) . '/' : '%%'
 
 "quickfix: 
-function! QuickfixMapping()
-  " Go to the previous location and stay in the quickfix window
-  nnoremap <buffer> k :cprev<CR><C-w>w
-  " Go to the next location and stay in the quickfix window
-  nnoremap <buffer> j :cnext<CR><C-w>w
-endfunction
-augroup quickfix_group
-    autocmd!
-    autocmd filetype qf call QuickfixMapping()
-augroup END
+" function! QuickfixMapping()
+"   " Go to the previous location and stay in the quickfix window
+"   nnoremap <buffer> k :cprev<CR><C-w>w
+"   " Go to the next location and stay in the quickfix window
+"   nnoremap <buffer> j :cnext<CR><C-w>w
+" endfunction
+" augroup quickfix_group
+"     autocmd!
+"     autocmd filetype qf call QuickfixMapping()
+" augroup END
 
 "cursor always center
 augroup VCenterCursor
@@ -325,9 +342,11 @@ command! SpaceMode :set et sw=2 "set 2 space as indent
 
 
 "source/reload vimrc
-command! ReloadVimRC :source ~/.vimrc
+command! Vreload :source ~/.vimrc
+
 
 "nerdtree
+let NERDTreeShowHidden=1
 let NERDTreeMapOpenSplit='<C-s>'
 let NERDTreeMapOpenVSplit='<C-v>'
 let NERDTreeMapPreviewVSplit='gv'
@@ -349,9 +368,34 @@ noremap <C-p> :Files<CR>
 " recently opened files, :FzfHistory uses it
 set viminfo='1000
 
+
 "lsp
-let g:lsp_settings = {
-\  'yaml-language-server': {
-\    'disabled': 1,
-\   }
-\}
+"let g:lsp_settings = {
+  " \  'yaml-language-server': {
+  " \    'disabled': 1,
+  " \   },
+  " \  'kt-language-server': {
+  " \    'disabled': 1,
+  " \   }
+""\}
+
+"custom indentation
+"lukas-reineke/indent-blankline.nvim
+
+
+"copilot github
+imap <C-n> <Plug>(copilot-next)
+
+
+"terminal mapping
+tnoremap <Esc> <c-\><c-n>
+
+
+"fold mode
+command! Fold :nmap p zfip | nmap i zfii | nmap o zo | nmap u zo
+command! NoFold :Vreload
+
+
+"coc nvim
+nnoremap <C-]> <plug>(coc-definition)
+nnoremap <C-[> <plug>(coc-references)
