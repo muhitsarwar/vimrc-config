@@ -2,7 +2,7 @@ VISULA=nvim
 EDITOR=$VISUAL
 
 #sources
-#source ~/.env
+source ~/.env
 source ~/.cds
 
 #fuzzy history
@@ -150,17 +150,18 @@ vpn-stats() {
 }
 
 
-#.bashrc autoload
-if [[ -f ".bashrcl" ]]; then
-    source .bashrcl
+#.bashrc autoload in a local directory
+if [ -f ".bashrc" ] && [ "$PWD" != "$HOME" ]; then
+	source .bashrc
 fi
 
 # ls related
-alias l='ls -lA'
+#alias ls='ls -lA'
 
 
 #kubernetes related
 #source ~/_kubectl_completion_bash
 #alias k='minikube kubectl --'
 #complete -F __start_kubectl k
+
 

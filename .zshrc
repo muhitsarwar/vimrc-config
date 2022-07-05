@@ -1,4 +1,4 @@
-# plugin 81G
+# plugin 82G
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -79,7 +79,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k" #git clone --depth=1 https://github.com/
 # custom plugins may be added to $zsh_custom/plugins/
 # example format: plugins=(rails git textmate ruby lighthouse)
 # add wisely, as too many plugins slow down shell startup.
-plugins=(z git colored-man-pages colorize pip python brew macos zsh-autosuggestions sudo web-search copypath copyfile copybuffer thefuck)
+plugins=(vi-mode z git colored-man-pages colorize pip python brew macos zsh-autosuggestions sudo web-search copypath copyfile copybuffer thefuck)
 #macos man-preview cdf ofd pfd tab split_tab vsplit_tab btrestart
 #dirhistory option arrow
 #copybuffer ctrl-o to copy from buffer
@@ -115,8 +115,11 @@ source $ZSH/oh-my-zsh.sh
 #
 # temporarilty using bashrc
 source ~/.bashrc
-source ~/.dotfiles/.zshrc_aliases 
-source ~/.dotfiles/.zshrc_configs
+source ~/.dotfiles/.aliases.zsh
+source ~/.dotfiles/.configs.zsh
+source ~/.iterm2_shell_integration.zsh
+source ~/.dotfiles/.iterm2_badges.zsh
+source ~/.vpn.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
