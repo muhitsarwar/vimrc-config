@@ -99,10 +99,11 @@ set maxmempattern=20000
 " color
 syntax enable
 set t_Co=256
-set background=dark
+"set background=dark
 let g:molokai_original = 1
 let g:rehash256 = 1
 colorscheme molokai
+hi Normal guibg=NONE ctermbg=NONE
 
 
 
@@ -393,7 +394,7 @@ tnoremap <Esc> <c-\><c-n>
 
 "fold mode
 command! Fold :nmap p zfip | nmap i zfii | nmap o zo | nmap u zo
-command! NoFold :Vreload
+command! NoFold :nnoremap p p | nnoremap i i | nnoremap o o | nnoremap u u
 
 
 "coc nvim
