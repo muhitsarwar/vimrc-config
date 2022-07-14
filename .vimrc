@@ -347,6 +347,7 @@ command! Vreload :source ~/.vimrc
 
 
 "nerdtree
+let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
 let NERDTreeMapOpenSplit='<C-s>'
 let NERDTreeMapOpenVSplit='<C-v>'
@@ -393,8 +394,9 @@ tnoremap <Esc> <c-\><c-n>
 
 
 "fold mode
-command! Fold :nmap p zfip | nmap i zfii | nmap o zo | nmap u zo
-command! NoFold :nnoremap p p | nnoremap i i | nnoremap o o | nnoremap u u
+set foldmethod=manual
+command! Fold :nnoremap f zf | nmap p zfip | nmap i zfii | nmap o zo | nmap u zo
+command! NoFold :nnoremap f f | nnoremap p p | nnoremap i i | nnoremap o o | nnoremap u u
 
 
 "coc nvim
