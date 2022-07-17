@@ -5,6 +5,13 @@
 	insteadOf = https://gitlab.myteksi.net/
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	editor = vim
+[pager]
+	diff     = true
+	difftool = true
+	log      = true
+	status = true
+	show     = true
 [interactive]
 	diffFilter = diff-so-fancy --patch
 [color]
@@ -23,11 +30,19 @@
 	new = green bold
 	whitespace = red reverse
 [alias]
-	rb = "!f() { \
-		git rebase -i --autostash --autosquash "${1:-@~2}"; \
-		}; f"
+	;rb = "!f() { \
+	;	git rebase -i --autostash --autosquash "${1:-@~2}"; \
+	;	}; f"
+	;fixup = "!f() { \
+	;	TARGET=$(git rev-parse "$1"); \
+	;	git commit --fixup=$TARGET ${@:2}; \
+	;	}; f"
+	; please refactor
 	fixup = "!f() { \
-		TARGET=$(git rev-parse "$1"); \
-		git commit --fixup=$TARGET ${@:2}; \
+		TARGET=$(git rev-parse "${1:-@}"); \
+		git commit --fixup=$TARGET ${@:2} && \
+		EDITOR=true git rebase -i --autostash --autosquash $TARGET^; \
 		}; f"
 	tidy = !git reset --hard "${1:-@}" && git clean -fd
+	co = checkout
+	sw = switch
