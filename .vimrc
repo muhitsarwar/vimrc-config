@@ -356,6 +356,8 @@ let NERDTreeMapPreviewSplit='gs'
 map <C-g> :NERDTreeToggle<CR>
 map <C-f> :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif "close vim if the only window left open is a NERDTree
+autocmd BufEnter NERD_tree_* | execute 'normal R'
+
 
 
 "fzf
